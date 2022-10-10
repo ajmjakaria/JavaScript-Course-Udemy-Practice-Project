@@ -17,9 +17,9 @@ const displayMessage = function (message) {
   document.querySelector('.message').textContent = message;
 };
 
-document.querySelector('check').addEventListener('click', function () {
+document.querySelector('.check').addEventListener('click', function () {
   //converting guess string to number
-  const guess = Number(document.querySelector('guess').value);
+  const guess = Number(document.querySelector('.guess').value);
   //checking the type of guess
   console.log(guess, typeof guess);
 
@@ -37,7 +37,7 @@ document.querySelector('check').addEventListener('click', function () {
     //updating highscore
     if (score > highscore) {
       highscore = score;
-      document.querySelector('highscore').textContent = highscore;
+      document.querySelector('.highscore').textContent = highscore;
     }
     //For wrong guess
   } else if (guess !== secretNumber) {
@@ -50,4 +50,19 @@ document.querySelector('check').addEventListener('click', function () {
       document.querySelector('.score').textContent = 0;
     }
   }
+});
+
+//Code for again button(again button is for reseting the game)
+
+document.querySelector('.again').addEventListener('click', function () {
+  score = 20;
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+
+  displayMessage('Start guessing...');
+  document.querySelector('.score').textContent = score;
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('.guess').value = '';
+
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
 });
