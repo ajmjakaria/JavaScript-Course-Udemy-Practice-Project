@@ -17,4 +17,37 @@ const displayMessage = function (message) {
   document.querySelector('.message').textContent = message;
 };
 
-document.querySelector('check').addEventListener('click', function () {});
+document.querySelector('check').addEventListener('click', function () {
+  //converting guess string to number
+  const guess = Number(document.querySelector('guess').value);
+  //checking the type of guess
+  console.log(guess, typeof guess);
+
+  //for empty input field
+  if (!guess) {
+    displayMessage('⛔️ No number!');
+  } else if (guess === secretNumber) {
+    displayMessage('🎉 Correct Number!');
+    document.querySelector('.number').textContent = secretNumber;
+
+    //Changing background color for successful guess
+    document.querySelector('body').style.backgroundColor = '#60b347';
+    document.querySelector('.number').style.width = '30rem';
+
+    //updating highscore
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector('highscore').textContent = highscore;
+    }
+    //For wrong guess
+  } else if (guess !== secretNumber) {
+    if (score > 1) {
+      displayMessage(guess > secretNumber ? '📈 Too high!' : '📉 Too low!');
+      score--;
+      document.querySelector('.score').textContent = score;
+    } else {
+      displayMessage('💥 You lost the game!');
+      document.querySelector('.score').textContent = 0;
+    }
+  }
+});
