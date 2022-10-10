@@ -16,3 +16,5 @@ let highscore = 0;
 const displayMessage = function (message) {
   document.querySelector('.message').textContent = message;
 };
+
+document.querySelector('check').addEventListener('click', function () {});
