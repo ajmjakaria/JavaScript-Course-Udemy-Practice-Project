@@ -20,12 +20,12 @@ diceEl.classList.add('hidden');
 
 const scores = [0, 0];
 let currentScore = 0;
-let activeplayer = 0;
+let activePlayer = 0;
 
 const switchPlayer = function () {
-  document.getElementById(`current--${activeplayer}`).textContent = 0;
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
   currentScore = 0;
-  activeplayer = activeplayer === 0 ? 1 : 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
   player0El.classList.toggle('player--active');
   player1El.classList.toggle('player--active');
 };
@@ -44,7 +44,7 @@ btnRoll.addEventListener('click', function () {
   if (dice !== 1) {
     //Adding dice to current score
     currentScore += dice;
-    document.getElementById(`current--${activeplayer}`).textContent =
+    document.getElementById(`current--${activePlayer}`).textContent =
       currentScore;
   } else {
     //Switching to next player
@@ -53,12 +53,22 @@ btnRoll.addEventListener('click', function () {
 });
 
 btnHold.addEventListener('click', function () {
-  //Adding current score to active player's score
-  scores[activeplayer] += currentScore;
+  //Step 1: Adding current score to active player's score
+  scores[activePlayer] += currentScore;
 
-  document.getElementById(`score--${activeplayer}`).textContent =
-    scores[activeplayer];
-
-  //Switching to the next player
-  switchPlayer();
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
+  //Step 2: Checking if player's score is >= 50
+  if (scores[activePlayer] >= 50) {
+    //Finishing the game
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
+  } else {
+    //Switching to the next player
+    switchPlayer();
+  }
 });
